@@ -1,0 +1,23 @@
+.Container {
+  max-width: 50rem;
+  margin: 1rem auto;
+  box-sizing: border-box;
+}
+.Post {
+  color: #fff;
+  padding: 1rem;
+  width: 100%;
+  border-bottom: 1px dotted #ccc;
+  box-sizing: border-box;
+}
+.Btn {
+  display:block;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  background: coral;
+  margin: 0.5rem;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  margin: auto;
+}
