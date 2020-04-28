@@ -1,48 +1,47 @@
 import React, { Component } from "react";
 import classes from "./HomePage.module.css";
+import Post from "../../components/Post/Post";
+import axios from "../../axios-instance";
 
 class HomePage extends Component {
+  state = {
+    posts: null,
+    error: false,
+    loading: true,
+  };
+  componentDidMount() {
+    axios
+      .get("/posts")
+      .then((response) => {
+        const posts = response.data.slice(0, 100);
+        this.setState({ posts: posts, loading: false });
+      })
+      .catch((err) => {
+        this.setState({ error: true });
+      });
+  }
+  postSelectedHandler = (id) => {
+    this.props.history.push("/post/" + id);
+  };
   render() {
-    return (
-      <div className={classes.Container}>
-        <div className={classes.Post}>
-          <h3 style={{textAlign:"center"}}>Title</h3>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged.
-          </p> 
-          <button className={classes.Btn}>Read More</button>
-        </div>
-        <div className={classes.Post}>
-          <h3 style={{textAlign:"center"}}>Title</h3>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged.
-          </p> 
-          <button className={classes.Btn}>Read More</button>
-        </div>
-        <div className={classes.Post}>
-          <h3 style={{textAlign:"center"}}>Title</h3>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged.
-          </p> 
-          <button className={classes.Btn}>Read More</button>
-        </div>
-      </div>
-    );
+    let posts = <p style={{ textAlign: "center" }}>Something went wrong..!</p>;
+    if (!this.state.error && this.state.loading) {
+      posts = <p style={{ textAlign: "center" }}>Loading..!</p>;
+    }
+
+    if (!this.state.error && this.state.posts) {
+      posts = this.state.posts.map((post) => {
+        return (
+          <Post
+            key={post.id}
+            title={post.title}
+            body={post.body}
+            clicked={() => this.postSelectedHandler(post.id)}
+          />
+        );
+      });
+    }
+    return <div className={classes.Container}>{posts}</div>;
   }
 }
 export default HomePage;
