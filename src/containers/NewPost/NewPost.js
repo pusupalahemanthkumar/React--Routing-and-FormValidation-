@@ -132,7 +132,10 @@ class NewPost extends Component {
   };
   submitHandler = (event) => {
     event.preventDefault();
-    console.log("submited..!");
+    console.log("submitting..!");
+    this.setState({
+      loading:true
+    })
     const formData = {};
     for (let formElementIdentifier in this.state.Form) {
       formData[formElementIdentifier] = this.state.Form[
@@ -144,7 +147,7 @@ class NewPost extends Component {
       .post("/posts", formData)
       .then((result) => {
         console.log("done..!");
-        this.props.match.replace("/");
+        this.props.history.replace("/");
       })
       .catch((err) => {
         console.log(err);
@@ -178,6 +181,13 @@ class NewPost extends Component {
         </button>
       </form>
     );
+     if(this.state.loading){
+       form=(
+         <p style={{textAlign:"center" ,fontSize:"2rem"}}>
+           Loading...
+         </p>
+       )
+     }
     return <div className={classes.NewPost}>{form}</div>;
   }
 }

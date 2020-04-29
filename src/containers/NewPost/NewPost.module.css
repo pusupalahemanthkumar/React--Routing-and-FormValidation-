@@ -1,17 +1,17 @@
 .NewPost {
   margin: 1rem auto;
-  border: 1px solid #ccc;
-  max-width: 700px;
+  /* border: 1px solid #ccc; */
+  max-width: 70rem;
   padding: 1rem;
-
+  box-sizing: border-box;
 }
-.Btn{
+.Btn {
   display: block;
   padding: 0.5rem 2rem;
-  margin:1rem;
+  margin: 1rem;
   cursor: pointer;
   background: coral;
   border: none;
   border-radius: 5px;
-  color:#fff;
+  color: #fff;
 }
