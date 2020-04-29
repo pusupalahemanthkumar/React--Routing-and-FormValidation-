@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Input from "../../components/UI/Input/Input";
+import classes from "./NewPost.module.css";
+import axios from "../../axios-instance";
 
 class NewPost extends Component {
   state = {
@@ -30,11 +32,38 @@ class NewPost extends Component {
         valid: false,
         touched: false,
       },
+      email: {
+        elementType: "input",
+        elementConfig: {
+          type: "email",
+          placeholder: "Enter Email",
+        },
+        value: "",
+        validation: {
+          required: true,
+          isEmail:true
+        },
+        valid: false,
+        touched: false,
+      },
       author: {
         elementType: "input",
         elementConfig: {
           type: "text",
           placeholder: "Enter Author Name",
+        },
+        value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
+      },
+      number: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Enter Any Number of 5 Digits",
         },
         value: "",
         validation: {
@@ -99,7 +128,27 @@ class NewPost extends Component {
     for (let inputIdentifier in updatedForm) {
       formIsValid = updatedForm[inputIdentifier].valid && formIsValid;
     }
-    this.setState({ orderForm: updatedForm, formIsValid: formIsValid });
+    this.setState({ Form: updatedForm, formIsValid: formIsValid });
+  };
+  submitHandler = (event) => {
+    event.preventDefault();
+    console.log("submited..!");
+    const formData = {};
+    for (let formElementIdentifier in this.state.Form) {
+      formData[formElementIdentifier] = this.state.Form[
+        formElementIdentifier
+      ].value;
+    }
+    console.log(formData);
+    axios
+      .post("/posts", formData)
+      .then((result) => {
+        console.log("done..!");
+        this.props.match.replace("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   render() {
     const formElementsArray = [];
@@ -109,8 +158,9 @@ class NewPost extends Component {
         config: this.state.Form[key],
       });
     }
+    console.log(formElementsArray);
     let form = (
-      <form onSubmit={this.orderHandler}>
+      <form onSubmit={this.submitHandler}>
         {formElementsArray.map((formElement) => (
           <Input
             key={formElement.id}
@@ -123,12 +173,12 @@ class NewPost extends Component {
             changed={(event) => this.inputChangedHandler(event, formElement.id)}
           />
         ))}
-        <button btnType="Success" disabled={!this.state.formIsValid}>
+        <button className={classes.Btn} disabled={!this.state.formIsValid}>
           Submit
         </button>
       </form>
     );
-    return <div>{form}</div>;
+    return <div className={classes.NewPost}>{form}</div>;
   }
 }
 export default NewPost;
