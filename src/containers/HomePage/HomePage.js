@@ -8,12 +8,14 @@ class HomePage extends Component {
     posts: null,
     error: false,
     loading: true,
+    selectedId: null,
   };
   componentDidMount() {
+    console.log(this.props);
     axios
       .get("/posts")
       .then((response) => {
-        const posts = response.data.slice(0, 100);
+        const posts = response.data.slice(0, 3);
         this.setState({ posts: posts, loading: false });
       })
       .catch((err) => {
@@ -21,7 +23,8 @@ class HomePage extends Component {
       });
   }
   postSelectedHandler = (id) => {
-    this.props.history.push("/post/" + id);
+    console.log(id);
+    this.props.history.push("/posts/" + id);
   };
   render() {
     let posts = <p style={{ textAlign: "center" }}>Something went wrong..!</p>;
@@ -41,7 +44,12 @@ class HomePage extends Component {
         );
       });
     }
-    return <div className={classes.Container}>{posts}</div>;
+
+    return (
+      <div>
+        <div className={classes.Container}>{posts}</div>
+      </div>
+    );
   }
 }
 export default HomePage;

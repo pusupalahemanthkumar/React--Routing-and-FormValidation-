@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Layout from "./hoc/Layout/Layout";
 import HomePage from "./containers/HomePage/HomePage";
 import NewPost from "./containers/NewPost/NewPost";
+import SinglePost from "./containers/SinglePost/SinglePost";
 
 class App extends Component {
   render() {
@@ -12,8 +13,10 @@ class App extends Component {
         <BrowserRouter>
           <Layout>
             <Switch>
-              <Route path="/new-post" exact component={NewPost} />
-              <Route path="/"  exact component={HomePage} />
+              <Route path="/new-post" component={NewPost} />
+              <Route path="/posts/:id" component={SinglePost} />
+              <Route path="/posts" component={HomePage} />
+              <Route path="/" exact component={HomePage} />
             </Switch>
           </Layout>
         </BrowserRouter>
