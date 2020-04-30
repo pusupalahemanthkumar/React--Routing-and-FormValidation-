@@ -62,7 +62,7 @@ class NewPost extends Component {
       number: {
         elementType: "input",
         elementConfig: {
-          type: "text",
+          type: "number",
           placeholder: "Enter Any Number of 5 Digits",
         },
         value: "",

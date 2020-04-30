@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import classes from "./HomePage.module.css";
 import Post from "../../components/Post/Post";
 import axios from "../../axios-instance";
+// import SinglePost from "../SinglePost/SinglePost";
+// import {Route} from "react-router-dom"
 
 class HomePage extends Component {
   state = {
@@ -15,7 +17,7 @@ class HomePage extends Component {
     axios
       .get("/posts")
       .then((response) => {
-        const posts = response.data.slice(0, 50);
+        const posts = response.data.slice(0, 2);
         this.setState({ posts: posts, loading: false });
       })
       .catch((err) => {
@@ -48,6 +50,7 @@ class HomePage extends Component {
     return (
       <div>
         <div className={classes.Container}>{posts}</div>
+        {/* <Route path={this.props.match.url+ "/:id"} component={SinglePost} /> */}
       </div>
     );
   }

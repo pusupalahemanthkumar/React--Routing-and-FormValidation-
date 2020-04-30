@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import Layout from "./hoc/Layout/Layout";
 import HomePage from "./containers/HomePage/HomePage";
@@ -16,7 +16,8 @@ class App extends Component {
               <Route path="/new-post" component={NewPost} />
               <Route path="/posts/:id" component={SinglePost} />
               <Route path="/posts" component={HomePage} />
-              <Route path="/" exact component={HomePage} />
+              {/* <Route path="/" exact component={HomePage} /> */}
+              <Redirect from="/" to="/posts" />
             </Switch>
           </Layout>
         </BrowserRouter>
