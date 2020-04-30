@@ -41,7 +41,7 @@ class NewPost extends Component {
         value: "",
         validation: {
           required: true,
-          isEmail:true
+          isEmail: true,
         },
         valid: false,
         touched: false,
@@ -74,6 +74,19 @@ class NewPost extends Component {
         },
         valid: false,
         touched: false,
+      },
+      topic: {
+        elementType: "select",
+        elementConfig: {
+          options: [
+            { value: "Level 1", displayValue: "Level 1" },
+            { value: "Level 2", displayValue: "Level 2" },
+          ],
+        },
+        value: "Level 1",
+        validation: {},
+        valid: true,
+        // touched: false,
       },
     },
     formIsValid: false,
@@ -134,8 +147,8 @@ class NewPost extends Component {
     event.preventDefault();
     console.log("submitting..!");
     this.setState({
-      loading:true
-    })
+      loading: true,
+    });
     const formData = {};
     for (let formElementIdentifier in this.state.Form) {
       formData[formElementIdentifier] = this.state.Form[
@@ -181,13 +194,11 @@ class NewPost extends Component {
         </button>
       </form>
     );
-     if(this.state.loading){
-       form=(
-         <p style={{textAlign:"center" ,fontSize:"2rem"}}>
-           Loading...
-         </p>
-       )
-     }
+    if (this.state.loading) {
+      form = (
+        <p style={{ textAlign: "center", fontSize: "2rem" }}>Loading...</p>
+      );
+    }
     return <div className={classes.NewPost}>{form}</div>;
   }
 }
