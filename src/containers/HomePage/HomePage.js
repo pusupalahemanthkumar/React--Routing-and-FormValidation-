@@ -17,7 +17,7 @@ class HomePage extends Component {
     axios
       .get("/posts")
       .then((response) => {
-        const posts = response.data.slice(0, 2);
+        const posts = response.data.slice(0, 10);
         this.setState({ posts: posts, loading: false });
       })
       .catch((err) => {
